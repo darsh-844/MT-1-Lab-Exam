@@ -1,12 +1,9 @@
 import http from 'http';
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const PORT = 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const info = fs.readFileSync("./public/info.html",'utf8')
 
 const vehicles = [
   {
@@ -63,17 +60,16 @@ const server = http.createServer((req, res) => {
   }
 
   else if (url === '/info' && method === 'GET') {
-    const filePath = path.join(__dirname, 'public', 'info.html');
-
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Internal Server Error: Unable to load info.html' }));
-        return;
+      try {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(info);
       }
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(data);
-    });
+       catch (error) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Internal Server Error: Unable to load info.html' }));
+          return;
+        
+      }
   }
 
   else if (url === '/vehicles' && method === 'GET') {
