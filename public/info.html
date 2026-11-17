@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Management - System Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #1a73e8;
+    }
+    ul {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vehicle Management System Information</h1>
+    <p>This static page is served directly using the built-in Node.js <strong>FS (File System)</strong> module.</p>
+    <h3>Available HTTP Server Endpoints (Port 3000):</h3>
+    <ul>
+      <li><strong>GET /</strong> - Welcome Page</li>
+      <li><strong>GET /vehicles</strong> - View all vehicle records (JSON)</li>
+      <li><strong>POST /add-vehicle</strong> - Add a new vehicle record (JSON)</li>
+      <li><strong>GET /about</strong> - Application details</li>
+      <li><strong>GET /info</strong> - Static HTML documentation page</li>
+    </ul>
+  </div>
+</body>
+</html>
