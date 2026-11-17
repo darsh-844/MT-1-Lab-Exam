@@ -81,62 +81,62 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify(vehicles));
   }
 
-  else if (url === '/add-vehicle' && method === 'POST') {
-    let body = '';
+//   else if (url === '/add-vehicle' && method === 'POST') {
+//     let body = '';
 
-    req.on('data', (chunk) => {
-      body += chunk.toString();
-    });
+//     req.on('data', (chunk) => {
+//       body += chunk.toString();
+//     });
 
-    req.on('end', () => {
-      try {
-        if (!body) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Request body cannot be empty' }));
-          return;
-        }
+//     req.on('end', () => {
+//       try {
+//         if (!body) {
+//           res.writeHead(400, { 'Content-Type': 'application/json' });
+//           res.end(JSON.stringify({ error: 'Request body cannot be empty' }));
+//           return;
+//         }
 
-        const newVehicle = JSON.parse(body);
-        const { id, vehicleName, vehicleNumber, type, price } = newVehicle;
+//         const newVehicle = JSON.parse(body);
+//         const { id, vehicleName, vehicleNumber, type, price } = newVehicle;
 
-        if (
-          id === undefined ||
-          !vehicleName ||
-          !vehicleNumber ||
-          !type ||
-          price === undefined
-        ) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(
-            JSON.stringify({
-              error: 'Missing required fields: id, vehicleName, vehicleNumber, type, and price are required.'
-            })
-          );
-          return;
-        }
+//         if (
+//           id === undefined ||
+//           !vehicleName ||
+//           !vehicleNumber ||
+//           !type ||
+//           price === undefined
+//         ) {
+//           res.writeHead(400, { 'Content-Type': 'application/json' });
+//           res.end(
+//             JSON.stringify({
+//               error: 'Missing required fields: id, vehicleName, vehicleNumber, type, and price are required.'
+//             })
+//           );
+//           return;
+//         }
 
-        if (typeof price !== 'number' || price <= 0) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Price must be a positive number.' }));
-          return;
-        }
+//         if (typeof price !== 'number' || price <= 0) {
+//           res.writeHead(400, { 'Content-Type': 'application/json' });
+//           res.end(JSON.stringify({ error: 'Price must be a positive number.' }));
+//           return;
+//         }
 
-        const vehicleRecord = { id, vehicleName, vehicleNumber, type, price };
-        vehicles.push(vehicleRecord);
+//         const vehicleRecord = { id, vehicleName, vehicleNumber, type, price };
+//         vehicles.push(vehicleRecord);
 
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(
-          JSON.stringify({
-            message: 'Vehicle added successfully',
-            vehicle: vehicleRecord
-          })
-        );
-      } catch (error) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Invalid JSON format in request body' }));
-      }
-    });
-  }
+//         res.writeHead(201, { 'Content-Type': 'application/json' });
+//         res.end(
+//           JSON.stringify({
+//             message: 'Vehicle added successfully',
+//             vehicle: vehicleRecord
+//           })
+//         );
+//       } catch (error) {
+//         res.writeHead(400, { 'Content-Type': 'application/json' });
+//         res.end(JSON.stringify({ error: 'Invalid JSON format in request body' }));
+//       }
+//     });
+//   }
 
   else {
     res.writeHead(404, { 'Content-Type': 'application/json' });
