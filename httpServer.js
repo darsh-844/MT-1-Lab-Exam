@@ -1,9 +1,12 @@
 import http from 'http';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const PORT = 3000;
 
-const info = fs.readFileSync("./public/info.html",'utf8')
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const vehicles = [
   {
@@ -60,16 +63,17 @@ const server = http.createServer((req, res) => {
   }
 
   else if (url === '/info' && method === 'GET') {
-      try {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(info);
-      }
-       catch (error) {
+    const filePath = path.join(__dirname, 'public', 'info.html');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Internal Server Error: Unable to load info.html' }));
-          return;
-        
+        res.end(JSON.stringify({ error: 'Internal Server Error: Unable to load info.html' }));
+        return;
       }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
   }
 
   else if (url === '/vehicles' && method === 'GET') {
